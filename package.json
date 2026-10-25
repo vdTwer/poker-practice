@@ -1,0 +1,17 @@
+{
+  "name": "poker-practice",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @poker/web",
+    "build": "npm run build -w @poker/web",
+    "start": "npm start -w @poker/server",
+    "test": "npm test -w @poker/engine",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  }
+}
