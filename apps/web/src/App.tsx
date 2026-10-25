@@ -12,6 +12,12 @@ import { CountOuts } from './pages/CountOuts';
 import { WetOrDry } from './pages/WetOrDry';
 import { Play } from './pages/Play';
 import { Glossary } from './pages/Glossary';
+import { Position } from './pages/Position';
+import { OpenFold } from './pages/OpenFold';
+import { PaintRange } from './pages/PaintRange';
+import { PotOdds } from './pages/PotOdds';
+import { CallFold } from './pages/CallFold';
+import { Equity } from './pages/Equity';
 
 const ROUTES: Record<string, () => React.JSX.Element> = {
   '/': Home,
@@ -24,6 +30,12 @@ const ROUTES: Record<string, () => React.JSX.Element> = {
   '/drill/nuts': TapTheNuts,
   '/drill/outs': CountOuts,
   '/drill/wet-dry': WetOrDry,
+  '/learn/position': Position,
+  '/drill/open-fold': OpenFold,
+  '/drill/paint': PaintRange,
+  '/learn/pot-odds': PotOdds,
+  '/drill/call-fold': CallFold,
+  '/drill/equity': Equity,
   '/play': Play,
   '/glossary': Glossary,
 };

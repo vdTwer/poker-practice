@@ -1,7 +1,7 @@
 # Poker Practice
 
 A place to learn No-Limit Texas Hold'em from zero, with interactive drills and explanations that always show the
-reasoning. Built in slices following the plan in "Hold'em Learning Path". This is **slice 1: the game engine and table**.
+reasoning. Built in slices following the plan in "Hold'em Learning Path". Slices 1 (engine and table) and 2 (drill framework, stages 2 and 3) are done.
 
 ## Run it
 
@@ -12,7 +12,7 @@ docker compose up -d
 Then open http://localhost:8080. The first start builds the image (about a minute); the build also runs the engine
 tests, so a broken rule never ships. To use another port: `PORT=3000 docker compose up -d`.
 
-## What's in slice 1
+## What's in it
 
 - **Rules engine** (`packages/engine`): No-Limit Hold'em for 2 to 9 players. Blinds (including heads-up rules and
   short blinds), minimum raises, short all-ins that don't reopen raising, uncalled bets, automatic run-outs, main and
@@ -21,6 +21,14 @@ tests, so a broken rule never ships. To use another port: `PORT=3000 docker comp
 - **Stage 0 · Cards, table words and rules**: a slow-motion first hand with every part of the table named, the "Name
   it" word drill, the ten hand rankings, and drills for Who wins?, Build the best five and Side pots.
 - **Stage 1 · Reading the board**: Tap the nuts, Count your outs and Wet or dry.
+- **Drill framework**: graded drills come in sets. You answer first, each answer is graded as best play, fine (close
+  spot), small or big mistake with its cost in chips or big blinds, and every set ends with a review of your biggest
+  mistakes. Feedback always has three layers: the verdict and cost, the numbers as bars, and what would change the answer.
+- **Stage 2 · Position and opening hands**: a range explorer (any table size from 2 to 9, any seat), Open or fold?, and
+  Paint the range. Opening charts depend on how many players are still to act behind you; they are simplified typical
+  100-big-blind ranges, not solver output.
+- **Stage 3 · Pot odds and equity**: an interactive pot-odds lesson, Call or fold? with draws (turn bets and flop
+  all-ins), and Estimate your equity with the rule of 2 and 4.
 - **Vocabulary**: every poker word is tappable, new words carry a short explanation in brackets until you've used them
   correctly three times, and a searchable glossary of 111 terms with a word quiz.
 - **Practice table**: full hands against simple placeholder bots at 2 to 9 seats. Real bot personalities and the coach

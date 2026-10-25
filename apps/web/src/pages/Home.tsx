@@ -21,6 +21,18 @@ const STAGE1: Tile[] = [
   { path: '/drill/wet-dry', kind: 'Drill', title: 'Wet or dry?', text: 'Sort flops by how many draws they allow.', id: 'wet-dry' },
 ];
 
+const STAGE2: Tile[] = [
+  { path: '/learn/position', kind: 'Lesson', title: 'Position and opening hands', text: 'Pick a table size and a seat, and see which hands open from there and why.' },
+  { path: '/drill/open-fold', kind: 'Drill', title: 'Open or fold?', text: 'Everyone folds to you at a random seat and table size. Raise or fold? Sets of 20.', id: 'open-fold' },
+  { path: '/drill/paint', kind: 'Drill', title: 'Paint the range', text: 'Colour the 13×13 grid yourself, then compare it with the chart.', id: 'paint' },
+];
+
+const STAGE3: Tile[] = [
+  { path: '/learn/pot-odds', kind: 'Lesson', title: 'Pot odds', text: 'Drag the bet and your outs and watch whether calling wins or loses chips.' },
+  { path: '/drill/call-fold', kind: 'Drill', title: 'Call or fold?', text: 'You have a draw and face a bet. Graded in chips, with the numbers shown as bars.', id: 'call-fold' },
+  { path: '/drill/equity', kind: 'Drill', title: 'Estimate your equity', text: 'Turn outs into a percentage with the rule of 2 and 4.', id: 'equity' },
+];
+
 export function Home() {
   const scores = useDrillScores();
   const counts = useWordCounts();
@@ -113,13 +125,50 @@ export function Home() {
 
       <section className="stage-block">
         <div className="row" style={{ alignItems: 'flex-start' }}>
-          <span className="stage-num" style={{ background: 'var(--muted)' }}>2+</span>
+          <span className="stage-num">2</span>
+          <div className="stack-sm" style={{ flex: 1 }}>
+            <span className="eyebrow">Stage 2 · Preflop</span>
+            <h2>Position and opening hands</h2>
+            <p className="muted" style={{ maxWidth: '66ch' }}>
+              Most beginner losses come from playing too many hands from early seats. Learn which hands to{' '}
+              <T k="open" plain="raise first" /> from each seat, at any table size from 2 to 9 players.
+            </p>
+          </div>
+        </div>
+        {tiles(STAGE2)}
+        <details>
+          <summary className="muted" style={{ cursor: 'pointer' }}>Words in this stage</summary>
+          <div style={{ marginTop: 10 }}>{words(2)}</div>
+        </details>
+      </section>
+
+      <section className="stage-block">
+        <div className="row" style={{ alignItems: 'flex-start' }}>
+          <span className="stage-num">3</span>
+          <div className="stack-sm" style={{ flex: 1 }}>
+            <span className="eyebrow">Stage 3 · The math</span>
+            <h2>Pot odds and equity</h2>
+            <p className="muted" style={{ maxWidth: '66ch' }}>
+              This turns "I have a feeling" into "calling wins 4 chips on average". Everything after it uses this math.
+            </p>
+          </div>
+        </div>
+        {tiles(STAGE3)}
+        <details>
+          <summary className="muted" style={{ cursor: 'pointer' }}>Words in this stage</summary>
+          <div style={{ marginTop: 10 }}>{words(3)}</div>
+        </details>
+      </section>
+
+      <section className="stage-block">
+        <div className="row" style={{ alignItems: 'flex-start' }}>
+          <span className="stage-num" style={{ background: 'var(--muted)' }}>4+</span>
           <div className="stack-sm" style={{ flex: 1 }}>
             <span className="eyebrow">Coming next</span>
-            <h2>Position, pot odds and beyond</h2>
+            <h2>Bots, coaching and beyond</h2>
             <p className="muted" style={{ maxWidth: '66ch' }}>
-              Stages 2 to 8 arrive with the drill framework, the bot personalities and progress tracking. The{' '}
-              <a href={href('/play')}>practice table</a> already plays full hands with 2 to 9 players.
+              Bot personalities and a coach who pauses at key decisions come next, then progress tracking and stages 4 to 8.
+              The <a href={href('/play')}>practice table</a> already plays full hands with 2 to 9 players.
             </p>
           </div>
         </div>
