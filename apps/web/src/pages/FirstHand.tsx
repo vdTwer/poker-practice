@@ -4,7 +4,8 @@ import { PokerTable, type Target } from '../components/Table';
 import { CardRow } from '../components/PlayingCard';
 import { T } from '../components/Term';
 import { seatsFromHand, middlePot } from '../lib/handview';
-import { creditWord } from '../lib/storage';
+import { creditWord, completeLesson } from '../lib/storage';
+import { LessonComplete } from '../components/Lesson';
 import { href } from '../lib/router';
 
 // One scripted hand, dealt in slow motion. The engine plays it for real, so every number
@@ -162,6 +163,7 @@ export function FirstHand() {
   const states = useMemo(buildStates, []);
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
+  const [finished, setFinished] = useState(false);
   const step = STEPS[i];
   const last = i === STEPS.length - 1;
   const blocked = !!step.question && picked === null;
@@ -197,6 +199,7 @@ export function FirstHand() {
         <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)' }}>Your first hand, slowly</h1>
       </div>
 
+      {finished ? <LessonComplete lesson="first-hand" onRetake={() => { setFinished(false); setPicked(null); setI(0); }} /> : (
       <div className="lesson-grid">
       <PokerTable
         seats={seats}
@@ -268,13 +271,14 @@ export function FirstHand() {
           {!last && <button className="btn primary" onClick={() => go(1)} disabled={blocked}>{blocked ? 'Answer to continue' : 'Next →'}</button>}
           {last && (
             <>
-              <a className="btn primary" href={href('/drill/name-it')}>Practise the words: Name it →</a>
+              <button className="btn primary" onClick={() => { completeLesson('first-hand'); setFinished(true); }}>Finish the lesson</button>
               <button className="btn ghost" onClick={() => { setPicked(null); setI(0); }}>Watch again</button>
             </>
           )}
         </div>
       </div>
       </div>
+      )}
     </div>
   );
 }

@@ -18,9 +18,15 @@ tests, so a broken rule never ships. To use another port: `PORT=3000 docker comp
   short blinds), minimum raises, short all-ins that don't reopen raising, uncalled bets, automatic run-outs, main and
   side pots, split pots with the odd chip left of the button, and a hand evaluator that explains in plain words why one
   hand beats another.
+- **The learning path**: the home page is a roadmap of poker chips, one winding trail per stage. Lessons come first and
+  open one after another; each finished lesson unlocks the drills that practise it (and the first lesson unlocks the
+  practice table). Every lesson ends with a short check you have to get right. A drill counts as practised after 10
+  answers, shown as a ring filling around its chip. People with drill scores from before the roadmap keep their progress.
 - **Stage 0 · Cards, table words and rules**: a slow-motion first hand with every part of the table named, the "Name
-  it" word drill, the ten hand rankings, and drills for Who wins?, Build the best five and Side pots.
-- **Stage 1 · Reading the board**: Tap the nuts, Count your outs and Wet or dry.
+  it" word drill, the ten hand rankings, a lesson on all-ins and side pots, and drills for Who wins?, Build the best five
+  and Side pots.
+- **Stage 1 · Reading the board**: a lesson on the nuts, draws, outs and board texture, then Tap the nuts, Count your
+  outs and Wet or dry.
 - **Drill framework**: graded drills come in sets. You answer first, each answer is graded as best play, fine (close
   spot), small or big mistake with its cost in chips or big blinds, and every set ends with a review of your biggest
   mistakes. Feedback always has three layers: the verdict and cost, the numbers as bars, and what would change the answer.
@@ -35,7 +41,7 @@ tests, so a broken rule never ships. To use another port: `PORT=3000 docker comp
   come in slice 3.
 - Two-colour deck like real cards (hearts and diamonds red, spades and clubs black), in Terra Cotta and Wild Orchid.
 
-Progress (learned words, drill scores) is kept in your browser for now; slice 4 adds a proper progress store.
+Progress (finished lessons, learned words, drill scores) is kept in your browser for now; slice 4 adds a proper progress store.
 
 ## Develop
 

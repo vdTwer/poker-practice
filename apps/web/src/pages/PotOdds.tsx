@@ -3,6 +3,31 @@ import { equityOneCard, equityTwoCards, potOddsNeeded, callEV, maxCallableBet } 
 import { Bars } from '../components/SpotSet';
 import { T } from '../components/Term';
 import { href } from '../lib/router';
+import { LessonCheck, type CheckQuestion } from '../components/Lesson';
+
+const POT_ODDS_CHECK: CheckQuestion[] = [
+  {
+    prompt: 'The pot is 100 and your opponent bets 100. What share of the final pot do you pay if you call?',
+    options: ['25%', '33%', '50%'],
+    answer: 1,
+    explain: 'You pay 100 to win a pot of 100 + 100 + 100 = 300. 100 ÷ 300 = 33%.',
+    words: ['Pot odds'],
+  },
+  {
+    prompt: 'You have a flush draw with 9 outs and one card to come. Roughly how often do you hit?',
+    options: ['About 9%', 'About 18%', 'About 36%'],
+    answer: 1,
+    explain: 'With one card to come, multiply your outs by 2: 9 × 2 = 18%. (Exactly it is 9 ÷ 46 = 19.6%.)',
+    words: ['Outs', 'Rule of 2 and 4'],
+  },
+  {
+    prompt: 'You hit 18% of the time and calling costs 25% of the final pot. Call or fold?',
+    options: ['Call', 'Fold'],
+    answer: 1,
+    explain: 'Your chance to hit is smaller than the share you pay, so calling loses chips on average. Fold, unless you expect to win a lot more on later streets.',
+    words: ['Equity', 'Pot odds'],
+  },
+];
 
 const pct = (x: number) => `${(x * 100).toFixed(1)}%`;
 
@@ -84,11 +109,9 @@ export function PotOdds() {
           <li>Chance to hit ≈ outs × 2 with one card to come, outs × 4 with two.</li>
           <li>Call when your chance is higher than the share you pay. Later streets can win you more when you hit (<T k="implied odds" />), but start with the plain math.</li>
         </ul>
-        <div className="row" style={{ marginTop: 8 }}>
-          <a className="btn primary" href={href('/drill/call-fold')}>Drill it: Call or fold? →</a>
-          <a className="btn" href={href('/drill/equity')}>Estimate your equity</a>
-        </div>
       </div>
+
+      <LessonCheck lesson="pot-odds" questions={POT_ODDS_CHECK} />
     </div>
   );
 }

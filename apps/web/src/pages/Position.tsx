@@ -7,6 +7,31 @@ import { PokerTable, type TableSeat } from '../components/Table';
 import { RangeGrid, GridLegend } from '../components/RangeGrid';
 import { T } from '../components/Term';
 import { href } from '../lib/router';
+import { LessonCheck, type CheckQuestion } from '../components/Lesson';
+
+const POSITION_CHECK: CheckQuestion[] = [
+  {
+    prompt: 'What decides how many hands you can open?',
+    options: ['How many players are still to act behind you', 'How many chips you have', 'Which seat number you sit in'],
+    answer: 0,
+    explain: 'Every player behind you could wake up with a strong hand. The fewer players left to act, the more hands you can open.',
+    words: ['Position', 'Open'],
+  },
+  {
+    prompt: 'Under the gun at a full 9-player table, or on the button: where do you open more hands?',
+    options: ['Under the gun', 'On the button', 'The same in both seats'],
+    answer: 1,
+    explain: 'On the button only the two blinds are left to act, and you act last on every street after the flop. Under the gun, eight players are still behind you.',
+    words: ['Button', 'Under the gun'],
+  },
+  {
+    prompt: 'Everyone folds to you and you want to play your hand. What do you do?',
+    options: ['Call the big blind (limp)', 'Raise (open)', 'Check'],
+    answer: 1,
+    explain: 'When you are first in, raise or fold. A raise can win the blinds right away and puts you in charge of the hand; limping does neither.',
+    words: ['Limp', 'Open'],
+  },
+];
 
 /** Seats that can open (everyone but the big blind), in preflop order. */
 export function openingSeats(n: number, button = 0): number[] {
@@ -130,11 +155,9 @@ export function Position() {
           <li>Pairs, big cards and <T k="suited" /> hands come first. <T k="offsuit" plain="different suits" /> small cards almost never open.</li>
           <li>Don't <T k="limp" plain="just call the big blind" />: when you play a hand first in, raise it.</li>
         </ul>
-        <div className="row" style={{ marginTop: 8 }}>
-          <a className="btn primary" href={href('/drill/open-fold')}>Drill it: Open or fold? →</a>
-          <a className="btn" href={href('/drill/paint')}>Paint the range</a>
-        </div>
       </div>
+
+      <LessonCheck lesson="position" questions={POSITION_CHECK} />
     </div>
   );
 }
