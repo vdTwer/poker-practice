@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { parseCards, mulberry32, randomSeed } from '@poker/engine';
 import { CardRow } from '../components/PlayingCard';
 import { T } from '../components/Term';
-import { creditWord, missWord } from '../lib/storage';
+import { creditWord, missWord, completeLesson, useCompletedLessons } from '../lib/storage';
+import { LessonComplete } from '../components/Lesson';
+
+const RIGHT_TO_FINISH = 5;
 import { href } from '../lib/router';
 
 const HANDS = [
@@ -25,6 +28,8 @@ export function Rankings() {
   const [seed] = useState(randomSeed);
   const [round, setRound] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
+  const [right, setRight] = useState(0);
+  const done = !!useCompletedLessons().rankings;
   const rng = mulberry32(seed + round * 7919);
   let a = Math.floor(rng() * TYPES.length);
   let b = Math.floor(rng() * (TYPES.length - 1));
@@ -36,7 +41,11 @@ export function Rankings() {
   const pick = (k: number) => {
     if (picked !== null) return;
     setPicked(k);
-    if (k === better) { creditWord(TYPES[a].term); creditWord(TYPES[b].term); }
+    if (k === better) {
+      creditWord(TYPES[a].term); creditWord(TYPES[b].term);
+      if (right + 1 >= RIGHT_TO_FINISH) completeLesson('rankings');
+      setRight(right + 1);
+    }
     else missWord(TYPES[better].term);
   };
 
@@ -66,7 +75,10 @@ export function Rankings() {
       </div>
 
       <div className="panel stack">
-        <span className="eyebrow">Quick check</span>
+        <div className="row" style={{ justifyContent: 'space-between' }}>
+          <span className="eyebrow">Quick check</span>
+          <span className="mono muted" style={{ fontSize: '0.85rem' }}>{done ? 'Lesson finished · keep going if you like' : `${right} of ${RIGHT_TO_FINISH} right to finish`}</span>
+        </div>
         <h2 style={{ fontSize: '1.3rem' }}>Which hand is higher?</h2>
         <div className="choices">
           {[a, b].map((k) => (
@@ -92,10 +104,7 @@ export function Rankings() {
         )}
       </div>
 
-      <div className="row">
-        <a className="btn primary" href={href('/drill/who-wins')}>Drill it: Who wins? →</a>
-        <a className="btn" href={href('/drill/best-five')}>Build the best five</a>
-      </div>
+      {right >= RIGHT_TO_FINISH && <LessonComplete lesson="rankings" />}
     </div>
   );
 }

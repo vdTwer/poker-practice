@@ -76,3 +76,30 @@ export function recordDrill(id: string, correct: boolean, streak: number) {
   const s = cur[id] ?? { right: 0, total: 0, best: 0 };
   scores.set({ ...cur, [id]: { right: s.right + (correct ? 1 : 0), total: s.total + 1, best: Math.max(s.best, streak) } });
 }
+
+// --- Lessons: the roadmap -------------------------------------------------------------
+
+const lessons = createStore<Record<string, string>>('pp.lessons.v1', {});
+
+export function useCompletedLessons() {
+  return useSyncExternalStore(lessons.subscribe, lessons.get, lessons.get);
+}
+
+export function completeLesson(id: string) {
+  const cur = lessons.get();
+  if (cur[id]) return;
+  lessons.set({ ...cur, [id]: new Date().toISOString() });
+}
+
+export function getCompletedLessons() {
+  return lessons.get();
+}
+
+export function getDrillScores() {
+  return scores.get();
+}
+
+/** Clears lesson completion (for "start over" on the roadmap). */
+export function resetLessons() {
+  lessons.set({});
+}

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type React from 'react';
 import { useRoute, href } from './lib/router';
 import { Home } from './pages/Home';
@@ -18,6 +19,11 @@ import { PaintRange } from './pages/PaintRange';
 import { PotOdds } from './pages/PotOdds';
 import { CallFold } from './pages/CallFold';
 import { Equity } from './pages/Equity';
+import { SidePotsLesson } from './pages/SidePotsLesson';
+import { BoardLesson } from './pages/BoardLesson';
+import { Locked } from './components/Locked';
+import { nodeByPath, nodeState, migrateFromScores } from './lib/roadmap';
+import { completeLesson, getCompletedLessons, getDrillScores, useCompletedLessons, useDrillScores } from './lib/storage';
 
 const ROUTES: Record<string, () => React.JSX.Element> = {
   '/': Home,
@@ -26,7 +32,9 @@ const ROUTES: Record<string, () => React.JSX.Element> = {
   '/drill/name-it': NameIt,
   '/drill/who-wins': WhoWins,
   '/drill/best-five': BestFive,
+  '/learn/side-pots': SidePotsLesson,
   '/drill/side-pots': SidePots,
+  '/learn/board': BoardLesson,
   '/drill/nuts': TapTheNuts,
   '/drill/outs': CountOuts,
   '/drill/wet-dry': WetOrDry,
@@ -42,6 +50,11 @@ const ROUTES: Record<string, () => React.JSX.Element> = {
 
 export function App() {
   const route = useRoute();
+  const completed = useCompletedLessons();
+  const scores = useDrillScores();
+  useEffect(() => { migrateFromScores(getCompletedLessons(), getDrillScores()).forEach(completeLesson); }, []);
+  const node = nodeByPath(route);
+  const locked = node && nodeState(node, completed, scores) === 'locked';
   const Page = ROUTES[route] ?? Home;
   const section = route.startsWith('/play') ? 'play' : route.startsWith('/glossary') ? 'glossary' : 'learn';
   return (
@@ -60,7 +73,7 @@ export function App() {
         </div>
       </header>
       <main>
-        <Page key={route} />
+        {locked ? <Locked node={node} key={route} /> : <Page key={route} />}
       </main>
     </>
   );
