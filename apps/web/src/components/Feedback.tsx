@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 
 interface Props {
-  tone: 'good' | 'bad' | 'close';
+  tone: 'good' | 'bad' | 'close' | 'small';
   /** Layer 1: what was right and how much it mattered. Always shown. */
   verdict: ReactNode;
   detail?: ReactNode;

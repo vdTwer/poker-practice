@@ -5,3 +5,6 @@ export * from './game';
 export * from './board';
 export * from './drills';
 export * from './bots';
+export * from './ranges';
+export * from './odds';
+export * from './spots';
